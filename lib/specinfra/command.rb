@@ -414,3 +414,7 @@ require 'specinfra/command/voidlinux'
 require 'specinfra/command/voidlinux/base'
 require 'specinfra/command/voidlinux/base/package'
 require 'specinfra/command/voidlinux/base/service'
+
+# Termux (inherit Base)
+require 'specinfra/command/termux'
+require 'specinfra/command/termux/base'
