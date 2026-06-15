@@ -39,4 +39,10 @@ describe Specinfra::Helper::DetectOs::Suse do
       :release => '11.4'
     )
   end
+  it 'should not assume the system is SUSE just because zypper is installed' do
+    allow(suse).to receive(:run_command) {
+      CommandResult.new(:stdout => "PRETTY_NAME=\"Debian GNU/Linux forky/sid\"\nNAME=\"Debian GNU/Linux\"\nVERSION_CODENAME=forky\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n", :exit_status => 0)
+    }
+    expect(suse.detect).to be_nil
+  end
 end

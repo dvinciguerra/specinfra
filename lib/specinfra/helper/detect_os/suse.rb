@@ -12,7 +12,9 @@ class Specinfra::Helper::DetectOs::Suse < Specinfra::Helper::DetectOs
       if line =~ /VERSION_ID=\"(\d+\.\d+|\d+)\"/
         release = $1
       end
-      { :family => family, :release => release }
+      if family
+        { :family => family, :release => release }
+      end
     elsif run_command('ls /etc/SuSE-release').success? and run_command('zypper -V').success?
       line = run_command('cat /etc/SuSE-release').stdout
       if line =~ /SUSE Linux Enterprise Server (\d+)/
