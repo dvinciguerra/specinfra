@@ -20,4 +20,4 @@ tmp
 .ruby-version
 .rvmrc
 upstream.sh
-
+vendor/bundle/
