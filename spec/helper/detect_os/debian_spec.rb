@@ -3,6 +3,11 @@ require 'specinfra/helper/detect_os/debian'
 
 describe Specinfra::Helper::DetectOs::Debian do
   debian = Specinfra::Helper::DetectOs::Debian.new(Specinfra.backend)
+  before do
+    allow(debian).to receive(:run_command).with('test -d /data/data/com.termux/files/usr') {
+      CommandResult.new(:stdout => '', :exit_status => 1)
+    }
+  end
 
   it 'Should return debian 7 wheezy is installed.' do
     allow(debian).to receive(:run_command).with('cat /etc/debian_version') {
@@ -117,5 +122,12 @@ describe Specinfra::Helper::DetectOs::Debian do
       :release  => 4294967295.0,
       :codename => 'trixie'
     )
+  end
+
+  it 'Should return nil when running inside termux.' do
+    allow(debian).to receive(:run_command).with('test -d /data/data/com.termux/files/usr') {
+      CommandResult.new(:stdout => '', :exit_status => 0)
+    }
+    expect(debian.detect).to be_nil
   end
 end

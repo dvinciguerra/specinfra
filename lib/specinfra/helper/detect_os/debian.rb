@@ -1,5 +1,7 @@
 class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
   def detect
+    return if run_command('test -d /data/data/com.termux/files/usr').success?
+
     if (debian_version = run_command('cat /etc/debian_version')) && debian_version.success?
       distro   = nil
       release  = nil
